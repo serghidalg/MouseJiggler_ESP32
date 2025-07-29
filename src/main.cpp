@@ -54,7 +54,12 @@ void setup() {
     Serial.println("Press the button to change modes.");
   }
 
-  esp_task_wdt_init(3, true);
+  esp_task_wdt_config_t wdt_config = {
+    .timeout_ms = 3000,
+    .idle_core_mask = 1,
+    .trigger_panic = true
+  };
+  esp_task_wdt_init(&wdt_config);  
   esp_task_wdt_add(NULL);
 }
 
